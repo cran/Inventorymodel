@@ -1,9 +1,11 @@
 EPQ <-
-function(n=NA,a=NA,d=NA,h=NA,m=NA,r=NA,s=NA){
+function(n=NA,a=NA,d=NA,h=NA,m=NA,r=NA,b=NA){
+  
 
   
   cat("EPQ model", sep="\n")
   
+  s<-b
   if (sum(is.na(h)==T)==length(h)){
     cat("A value for h is necessary to determinate the optimal orders.", sep="\n")
   }  else { 

@@ -6,7 +6,7 @@ inventorymodelfunction}
 General function in Inventorymodel package for obtaining the optimal policy by selecting any model and its corresponding parameters.}
 \usage{
 inventorymodelfunction(model=c("EOQ","EPQ","STI","FOC","MCT","MWHC","MWHC2","MWHCCT"),
-n=NA,a=NA,av=NA,d=NA,h=NA,m=NA,r=NA,s=NA,K=NA,b=NA,c1=NA,c2=NA,
+n=NA,a=NA,av=NA,d=NA,h=NA,m=NA,r=NA,K=NA,b=NA,c1=NA,c2=NA,
 cooperation=c(0,1),allocation=c(0,1))
 }
 \arguments{
@@ -32,9 +32,6 @@ Vector. Number of orders to each agent(optional).
 }
   \item{r}{
 Vector. Replacement rate to each agent. In general, r>d.
-}
-  \item{s}{
-Vector. Cost of a shortage to each agent.
 }
 \item{K}{
 Vector. Warehouse capacity to each agent.}

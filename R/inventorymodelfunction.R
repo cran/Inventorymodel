@@ -1,6 +1,6 @@
 inventorymodelfunction <-
 function(model=c("EOQ","EPQ","STI","FOC","MCT","MWHC","MWHC2","MWHCCT"),
-n=NA,a=NA,av=NA,d=NA,h=NA,m=NA,r=NA,s=NA,K=NA,b=NA,c1=NA,c2=NA,cooperation=c(0,1),allocation=c(0,1)){
+n=NA,a=NA,av=NA,d=NA,h=NA,m=NA,r=NA,K=NA,b=NA,c1=NA,c2=NA,cooperation=c(0,1),allocation=c(0,1)){
 
 if (model=="EOQ"){ 
 
@@ -28,20 +28,20 @@ names(sol)<-c("*","SOC rule")
 if (model=="EPQ"){
 
 cat("EPQ", sep="\n")
-if (sum(is.na(n)==TRUE|is.na(a)==TRUE|is.na(h)==TRUE|length(r)!=n|length(s)!=n|length(d)!=n|length(h)!=n|is.na(r)==TRUE|is.na(r)==TRUE)>=1| (sum(is.na(d))>=1& sum(is.na(m))>=1)){
+if (sum(is.na(n)==TRUE|is.na(a)==TRUE|is.na(h)==TRUE|length(r)!=n|length(b)!=n|length(d)!=n|length(h)!=n|is.na(r)==TRUE|is.na(r)==TRUE)>=1| (sum(is.na(d))>=1& sum(is.na(m))>=1)){
 sol<-c("Error: invalid data")
 }else{
 if (cooperation==0){
-sol<-EPQ(n,a,d,h,m,r,s)
+sol<-EPQ(n,a,d,h,m,r,b)
 if (allocation==1){
-sol<-list(sol,SOC(n,a,d,h,m,r,s,model="EPQ",cooperation=0))
+sol<-list(sol,SOC(n,a,d,h,m,r,b,model="EPQ",cooperation=0))
 names(sol)<-c("*","SOC rule")
 }
 }
 if (cooperation==1){
-sol<-EPQcoo(n,a,d,h,m,r,s)
+sol<-EPQcoo(n,a,d,h,m,r,b)
 if (allocation==1){
-sol<-list(sol,SOC(n,a,d,h,m,r,s,model="EPQ",cooperation=1))
+sol<-list(sol,SOC(n,a,d,h,m,r,b,model="EPQ",cooperation=1))
 names(sol)<-c("*","SOC rule")
 }
 }

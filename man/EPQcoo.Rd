@@ -6,7 +6,7 @@ EPQcoo}
 \description{
 This function obtains the optimal orders and the associated cost when agents are cooperating in the EPQ model.}
 \usage{
-EPQcoo(n = NA, a = NA, d = NA, h = NA, m = NA, r = NA, s = NA)
+EPQcoo(n = NA, a = NA, d = NA, h = NA, m = NA, r = NA, b = NA)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -28,7 +28,7 @@ Vector. Number of orders to each agent (optional).
   \item{r}{
 Vector. Replacement rate to each agent. In general, r>d.
 }
-  \item{s}{
+  \item{b}{
 Vector. Cost of a shortage to each agent.
 }
 }
@@ -41,7 +41,7 @@ A list with the following components:
 }
 }
 \examples{
-EPQcoo(n=3,a=600,d=c(500,300,400),h=c(9.6,11,10),r=rep(600,3),s=c(100,150,200))
+EPQcoo(n=3,a=600,d=c(500,300,400),h=c(9.6,11,10),r=rep(600,3),b=c(100,150,200))
 
 #EPQ model
 #Cooperative case

@@ -1,4 +1,4 @@
-\encoding{latin1}
+\encoding{UTF-8} 
 \name{Inventory Models}
 \alias{Inventorymodelp}
 \docType{package}
@@ -25,23 +25,27 @@ Saavedra-Nieves, Alejandro
 Maintainer: Alejandro Saavedra-Nieves <alejandro.saavedra.nieves@gmail.com>
 }
 \references{
-M.G. Fiestras-Janeiro, I. Garc\'ia--Jurado, A. Meca, M. A. Mosquera (2011). Cooperative game theory and inventory management. \emph{European Journal of Operational Research}, \bold{210}(3), 459--466.
+M.G. Fiestras-Janeiro, I. García--Jurado, A. Meca, M. A. Mosquera (2011). Cooperative game theory and inventory management. \emph{European Journal of Operational Research}, \bold{210}(3), 459--466.
 
-M.G. Fiestras-Janeiro, I. Garc\'ia-Jurado, A. Meca, M. A. Mosquera (2012). Cost allocation in inventory transportation systems. \emph{Top}, \bold{20}(2), 397--410.
+M.G. Fiestras-Janeiro, I. García-Jurado, A. Meca, M. A. Mosquera (2012). Cost allocation in inventory transportation systems. \emph{Top}, \bold{20}(2), 397--410.
 
-M.G.~ Fiestras-Janeiro, I.~ Garc\'ia-Jurado, A.~Meca, M. A. ~Mosquera (2013a). Centralized inventory in a farming community. \emph{Journal of Business Economics}, 1--15.
+M.G.~ Fiestras-Janeiro, I.~ García-Jurado, A.~Meca, M. A. ~Mosquera (2014). Centralized inventory in a farming community. \emph{Journal of Business Economics}, \bold{84}(7), 983--997.
 
-M.G. Fiestras-Janeiro, I. Garc\'ia-Jurado, A. Meca, M.A. Mosquera (2013b). Cooperation on capacitated inventory situations with fixed holding costs. \emph{Pendiente de publicaci?n.}
+M.G. Fiestras-Janeiro, I. García-Jurado, A. Meca, M.A. Mosquera (2015). Cooperation on capacitated inventory situations with fixed holding costs. emph{European Journal of Operational Research}, \bold{241}(3), 719--726.
 
 A. Meca (2007). A core-allocation family for generalized holding cost games. \emph{Mathematical Methods of Operation Research}, \bold{65}, 499--517.
 
 A. Meca, I. Garc\'ia-Jurado, P. Borm (2003). Cooperation and competition in inventory games. \emph{Mathematical Methods of Operations Research}, \bold{57}(3), 481--493.
 
-A. Meca, J. Timmer, I. Garc\'ia-Jurado, P. Borm  (1999). Inventory games. Discussion paper, 9953, Tilburg University.
+A. Meca, J. Timmer, I. García-Jurado, P. Borm  (1999). Inventory games. Discussion paper, 9953, Tilburg University.
 
-A. Meca, J. Timmer, I. Garc\'ia-Jurado, P. Borm (2004). Inventory games. \emph{European Journal of Operational Research}, \bold{156}(1), 127--139.
+A. Meca, J. Timmer, I. García-Jurado, P. Borm (2004). Inventory games. \emph{European Journal of Operational Research}, \bold{156}(1), 127--139.
  
-M.A. Mosquera, I. Garc\'ia-Jurado, M.G. Fiestras-Janeiro (2008). A note on coalitional manipulation and centralized inventory management. \emph{Annals of Operations Research}, \bold{158}(1). 183--188.
+M.A. Mosquera, I. García-Jurado, M.G. Fiestras-Janeiro (2008). A note on coalitional manipulation and centralized inventory management. \emph{Annals of Operations Research}, \bold{158}(1). 183--188.
+
+A. Saavedra-Nieves, I. García-Jurado, M.G. Fiestras-Janeiro (2017a). Placing joint orders when holding costs are negligible and shortages are not allowed. \emph{Game Theory in Management Accounting: Implementing Incentives and Fairness (to appear)}.
+
+A. Saavedra-Nieves, I. García-Jurado, M.G. Fiestras-Janeiro (2017b). On coalition formation in a non-convex multi-agent inventory problem. \emph{Submitted in Annals of Operations Research}.
 }
 
 

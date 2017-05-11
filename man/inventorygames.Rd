@@ -6,7 +6,7 @@ Inventorygames}
 \description{
 Generic function to show the associated cost game to a EOQ or EPQ model.}
 \usage{
-inventorygames(n = NA, a = NA, d = NA, h = NA, m = NA, r = NA, s = NA, 
+inventorygames(n = NA, a = NA, d = NA, h = NA, m = NA, r = NA, b = NA, 
 model = c("EOQ", "EPQ"))
 }
 %- maybe also 'usage' for other objects documented here.
@@ -29,7 +29,7 @@ Vector. Number of orders to each agent (optional).
   \item{r}{
 Vector. Replacement rate to each agent. In general, r>d.}
 
-  \item{s}{
+  \item{b}{
 Vector. Cost of a shortage to each agent.
 }
   \item{model}{
