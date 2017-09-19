@@ -1,5 +1,5 @@
 SOC <-
-function(n=NA,a=NA,d=NA,h=NA,m=NA,r=NA,s=NA,model=c("EOQ","EPQ"),cooperation=c(0,1)){
+function(n=NA,a=NA,d=NA,h=NA,m=NA,r=NA,b=NA,model=c("EOQ","EPQ"),cooperation=c(0,1)){
 coalicion<-coalitions(n)
 matriz<-as.matrix(coalicion[[1]])
 matriz0<-matriz
@@ -11,10 +11,10 @@ if (sum(is.na(h)==T)==length(h)){
   if (sum(is.na(m)!=T)==length(m)|sum(is.na(d)!=T)==length(d)){ 
     if (model=="EOQ"){Q<-EOQ(n,a,d,h,m)[[1]]}
     if (model=="EPQ"){
-      if (sum(is.na(h)==T)==length(h)|sum(is.na(s)==T)==length(s)|sum(is.na(r)==T)==length(r)){
+      if (sum(is.na(h)==T)==length(h)|sum(is.na(b)==T)==length(b)|sum(is.na(r)==T)==length(r)){
         cat("Values for r and s are necessary to determinate the optimal orders and shortages.", sep="\n")
       } else {
-        Q<-EPQ(n,a,d,h,r,s,m)[[1]]
+        Q<-EPQ(n,a,d,h,m,r,b)[[1]]
       }
     }
   } else {
