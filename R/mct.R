@@ -10,13 +10,22 @@ if (is.na(a)==T|sum(is.na(d)==T)==length(d)|sum(is.na(K)==T)==length(K)|sum(is.n
   }
   if (cooperation==1){
     cat("Cooperative case", sep="\n")
-	  matriz<-data.frame(coalitions(n)[[1]],coalitions(n)[[2]],rep(0,2^n))
-	  for (i in 2:nrow(matriz)){
-		  aux<-which(matriz[i,1:n]==1)
-		  matriz[i,n+2]<-max(a+av[aux])*max(d[aux]/K[aux])
-	  }
-    colnames(matriz)<-c(1:n,"Coalition","Cost")
-    sol<-matriz
+    if (n<=10){
+	    matriz<-data.frame(coalitions(n)[[1]],coalitions(n)[[2]],rep(0,2^n))
+	    for (i in 2:nrow(matriz)){
+		    aux<-which(matriz[i,1:n]==1)
+		    matriz[i,n+2]<-max(a+av[aux])*max(d[aux]/K[aux])
+	    }
+      colnames(matriz)<-c(1:n,"Coalition","Cost")
+      sol<-matriz
+    }
+    if (n>10){
+      costes<-max(a+av)*max(d/K)
+      matriz<-data.frame("N",(max(a+av)*max(d/K)))
+      
+      colnames(matriz)<-c("Coalition","Cost")
+      sol<-matriz
+    }
     
   }
   return(sol)

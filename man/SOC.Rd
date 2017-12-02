@@ -6,7 +6,7 @@ SOC}
 Generic function for showing the allocations proposed by SOC rule under an EOQ or EPQ model.}
 \usage{
 SOC(n = NA, a = NA, d = NA, h = NA, m = NA, r = NA, b = NA, 
-model = c("EOQ", "EPQ"), cooperation = c(0, 1))
+model = c("EOQ", "EPQ"))
 }
 \arguments{
   \item{n}{
@@ -33,22 +33,18 @@ Vector. Cost of a shortage to each agent.
   \item{model}{
 Model to select. \code{EOQ} and \code{EPQ}  models can be considered.
 }
-  \item{cooperation}{
-Option to indicate cooperation. If it exists \code{cooperation=1} else \code{cooperation=0}.}
 }
 
 \value{
 Matrix with number of rows equal to the number of coalitions and \emph{n} columns. For each coalition or row, the output shows the cost that SOC rule allocates to each player or column.}
 \examples{
-SOC(n=3,a=600,d=c(500,300,400),h=c(9.6,11,10),m=NA,r=NA,b=NA,model="EOQ",
-cooperation=0)
+SOC(n=3,a=600,d=c(500,300,400),h=c(9.6,11,10),m=NA,r=NA,b=NA,model="EOQ")
 
 #EOQ model
 #$`Share the ordering costs rule (individually)`
 #[1] 2400.000 1989.975 2190.890
 
-SOC(n=3,a=600,d=c(500,300,400),h=c(9.6,11,10),m=NA,r=NA,b=NA,model="EOQ",
-cooperation=1)
+SOC(n=3,a=600,d=c(500,300,400),h=c(9.6,11,10),m=NA,r=NA,b=NA,model="EOQ")
 
 #EOQ model
 #$`Share the ordering costs rule (individually)`

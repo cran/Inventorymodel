@@ -12,14 +12,14 @@ sol<-c("Error: invalid data")
 if (cooperation==0){
 sol<-EOQ(n,a,d,h,m)
       if (allocation==1){
-sol<-list(sol,SOC(n,a,d,h,m,model="EOQ",cooperation=0))
+sol<-list(sol,SOC(n,a,d,h,m,model="EOQ"))
 names(sol)<-c("*","SOC rule")
 }
 }
 if (cooperation==1){
 sol<-EOQcoo(n,a,d,h,m)
 if (allocation==1){
-sol<-list(sol,SOC(n,a,d,h,m,model="EOQ",cooperation=1))
+sol<-list(sol,SOC(n,a,d,h,m,model="EOQ"))
 names(sol)<-c("*","SOC rule")
 }
 }
@@ -34,14 +34,14 @@ sol<-c("Error: invalid data")
 if (cooperation==0){
 sol<-EPQ(n,a,d,h,m,r,b)
 if (allocation==1){
-sol<-list(sol,SOC(n,a,d,h,m,r,b,model="EPQ",cooperation=0))
+sol<-list(sol,SOC(n,a,d,h,m,r,b,model="EPQ"))
 names(sol)<-c("*","SOC rule")
 }
 }
 if (cooperation==1){
 sol<-EPQcoo(n,a,d,h,m,r,b)
 if (allocation==1){
-sol<-list(sol,SOC(n,a,d,h,m,r,b,model="EPQ",cooperation=1))
+sol<-list(sol,SOC(n,a,d,h,m,r,b,model="EPQ"))
 names(sol)<-c("*","SOC rule")
 }
 }

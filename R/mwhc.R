@@ -8,6 +8,7 @@ function(n=NA,a=NA,b=NA,d=NA,K=NA,cooperation=c(0,1),allocation=c(0,1)){
     if (sum(sort(d/K)==(d/K))!=n) {
       cat("Warning: see agents, d and K are not in the order indicated by the ratios d/K.", sep="\n")
       d0K0<-d/K
+      b<-b[order(d0K0)]
       d<-d[order(d0K0)]
       K<-K[order(d0K0)]
     }
@@ -21,51 +22,92 @@ function(n=NA,a=NA,b=NA,d=NA,K=NA,cooperation=c(0,1),allocation=c(0,1)){
     }
     if (cooperation==1){
       cat("Cooperative case", sep="\n")
-      matriz0<-coalitions(n)
-      matriz<-data.frame(as.vector(matriz0[[2]]),rep(0,2^n),rep(0,2^n))
-      matriz0<-matriz0[[1]]
-      matriz1<-matrix(0,ncol=n+1,nrow=2^n)
-      for (i in 2:nrow(matriz)){
-        matriz0[i,]->coa
-        aux<-which(coa==1)
-        coaux<-which(coa==1)
-        s=length(coaux)
-        k=s+1
-        T<-rep(0,length(coa))
-        xT=0
-        SxT=coa
+	  if (n<=10){
+		  matriz0<-coalitions(n)
+	  	matriz<-data.frame(as.vector(matriz0[[2]]),rep(0,2^n),rep(0,2^n))
+  		matriz0<-matriz0[[1]]
+  		matriz1<-matrix(0,ncol=n+1,nrow=2^n)
+	  	for (i in 2:nrow(matriz)){
+	  		matriz0[i,]->coa
+	  		aux<-which(coa==1)
+	  		coaux<-which(coa==1)
+	  		s=length(coaux)
+	  		k=s+1
+	  		T<-rep(0,length(coa))
+	  		xT=0
+	  		SxT=coa
 
-        while(sum(SxT==T)!=length(coa)){
-          k=k-1;k
-          T[coaux[k]]=1;T
-          aux1<-which(T==1)
-          xT<-sqrt(sum(b[aux1]*d[aux1])/(2*a+sum(b[aux1]*K[aux1]^2/d[aux1])))
-          aux2<-which(xT<d/K)
-          SxT<-rep(0,length(coa));SxT[intersect(which(coa==1),aux2)]=1;SxT
-        }
-        matriz[i,2]<-xT
-        ind<-which(SxT==1)
-        matriz[i,3]<-sum(b[ind]*d[ind])/xT-sum(b[ind]*K[ind])
-        suma1<-0
-        c0<-sqrt((2*a+sum(b[ind]*K[ind]^2/d[ind]))/sum(b[ind]*d[ind]))
-        if (allocation==1){
-        for (k in 1:length(ind)){
-          suma1<-suma1+ind[k]*10^(length(ind)-k)
-          matriz1[i,1+ind[k]]<-c0*b[ind[k]]*d[ind[k]]-b[ind[k]]*K[ind[k]]
-        }
-        matriz1[i,1]<-suma1
-      }
-    }
-    matriz<-data.frame(matriz)
-    colnames(matriz)<-c("Coalitions","Optimal orders","Costs")
-    sol<-matriz
-    colnames(matriz1)<-c("Coalition_SxT",1:n)
-    rownames(matriz1)<-rep(" ",2^n)
-    if (allocation==1) {sol<-list(matriz,matriz1);names(sol)<-c("Optimal policies","R-rule")}
-    return(sol)
+  			while(sum(SxT==T)!=length(coa)){
+  				k=k-1;k
+  				T[coaux[k]]=1;T
+  				aux1<-which(T==1)
+  				xT<-sqrt(sum(b[aux1]*d[aux1])/(2*a+sum(b[aux1]*K[aux1]^2/d[aux1])))
+  				aux2<-which(xT<d/K)
+  				SxT<-rep(0,length(coa));SxT[intersect(which(coa==1),aux2)]=1;SxT
+	  		}
+		  	matriz[i,2]<-xT
+		  	ind<-which(SxT==1)
+		  	matriz[i,3]<-sum(b[ind]*d[ind])/xT-sum(b[ind]*K[ind])
+		  	suma1<-0
+		  	c0<-sqrt((2*a+sum(b[ind]*K[ind]^2/d[ind]))/sum(b[ind]*d[ind]))
+		  	if (allocation==1){
+			  	for (k in 1:length(ind)){
+				    suma1<-suma1+ind[k]*10^(length(ind)-k)
+				    matriz1[i,1+ind[k]]<-c0*b[ind[k]]*d[ind[k]]-b[ind[k]]*K[ind[k]]
+			    }
+			    matriz1[i,1]<-suma1
+		  	}
+		  	rownames(matriz1)<-rep(" ",2^n)
+		}
+	 }
+	 if (n>10){
+	     matriz1<-c()
+		   aux<-1:n
+		   coa<-aux
+       coaux<-aux
+       dcoa<-d[aux];Kcoa<-K[aux];bcoa<-b[aux]
+       s=length(aux)
+       T<-rep(0,n)
+       coste<-Inf;pedido<-0
+			
+		   s=n;k=s+1
+		   T<-rep(0,length(coa))
+	     xT=0
+		   SxT=coa
+		   matriz<-c("N")
+	     while(sum(SxT==T)!=length(coa)){
+			    k=k-1;T[coaux[k]]=1;T
+			    aux1<-which(T==1)
+			    xT<-sqrt(sum(b[aux1]*d[aux1])/(2*a+sum(b[aux1]*K[aux1]^2/d[aux1])))
+			    aux2<-which(xT<d/K)
+			    SxT<-rep(0,length(coa));SxT[intersect(which(coa==1),aux2)]=1;SxT
+		   }
+		   matriz<-c(matriz,xT)
+		   ind<-which(SxT==1)
+		   matriz<-c(matriz,sum(b[ind]*d[ind])/xT-sum(b[ind]*K[ind]))
+		   suma1<-0
+		   c0<-sqrt((2*a+sum(b[ind]*K[ind]^2/d[ind]))/sum(b[ind]*d[ind]))
+		   if (allocation==1){
+			   for (k in 1:length(ind)){
+			    	matriz1[i,1+ind[k]]<-c0*b[ind[k]]*d[ind[k]]-b[ind[k]]*K[ind[k]]
+			   }
+		   }
+		   rownames(matriz1)<-rep(" ")	
+   }	 
+	 
+  matriz<-data.frame(matriz)
+  colnames(matriz)<-c("Coalitions","Optimal orders","Costs")
+  sol<-matriz
+  colnames(matriz1)<-c("Coalition_SxT",1:n)
+  
+ 
+  if (allocation==1) {
+    sol<-list(matriz,matriz1);names(sol)<-c("Optimal policies","R-rule")}
+    
   }
-
-}}
+  return(sol)}
+  
+}
 
 
 

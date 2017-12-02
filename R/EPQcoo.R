@@ -1,9 +1,16 @@
 EPQcoo <-
 function(n=NA,a=NA,d=NA,h=NA,m=NA,r=NA,b=NA){
-coalicion<-coalitions(n)
-matriz<-as.matrix(coalicion[[1]])
-matriz0<-matriz
-matrizf<-matriz
+  if (n<=10){
+    coalicion<-coalitions(n)
+    matriz<-as.matrix(coalicion[[1]])
+    matriz0<-matriz
+    matrizf<-matriz
+  }
+  if (n>10){
+    matriz0<-c()
+    matrizf<-c()
+    costes<-c()
+  }
 costes<-c();costes[1]<-0
 s<-b
 if (sum(is.na(h)==T)==length(h)){
@@ -20,22 +27,39 @@ if (sum(is.na(h)==T)==length(h)){
     }
     if (sum(r>d)==length(r)){
       Qepq<-EPQ(n,a,d,h,m=NA,r,s)[[1]]
-      for (i in 2:nrow(matriz0)){
-        aux<-which(matriz0[i,]!=0)
-        for (j in 1:length(aux)){
-          matriz0[i,aux[j]]<-sqrt(2*a*d[aux[j]]^2/sum(d[aux]*h[aux]*s[aux]*(1-d[aux]/r[aux])/(h[aux]+s[aux])))
-          matrizf[i,aux[j]]<-matriz0[i,aux[j]]*h[aux[j]]*(1-d[aux[j]]/r[aux[j]])/(h[aux[j]]+s[aux[j]])
+      if (n<=10){
+        for (i in 2:nrow(matriz0)){
+          aux<-which(matriz0[i,]!=0)
+          for (j in 1:length(aux)){
+            matriz0[i,aux[j]]<-sqrt(2*a*d[aux[j]]^2/sum(d[aux]*h[aux]*s[aux]*(1-d[aux]/r[aux])/(h[aux]+s[aux])))
+            matrizf[i,aux[j]]<-matriz0[i,aux[j]]*h[aux[j]]*(1-d[aux[j]]/r[aux[j]])/(h[aux[j]]+s[aux[j]])
+          }
+          costes[i]<-2*a*sqrt(sum((d[aux]/Qepq[aux])^2))
         }
-        costes[i]<-2*a*sqrt(sum((d[aux]/Qepq[aux])^2))
+        matriz0<-data.frame(coalicion[[2]],matriz0,costes)
+        rownames(matrizf)<-rep("",2^n)
+        colnames(matriz0)<-c("Coalition",1:n,"Coalitional costs")
+        colnames(matrizf)<-1:n
+        sol<-list(matriz0,matrizf)
+        names(sol)<-c("Optimal order","Optimal shortages")
+      }
+      if (n>10){
+        matriz0<-sqrt(2*a*d^2/sum(d*h*s*(1-d/r)/(h+s)))
+        matrizf<-matriz0*h*(1-d/r)/(h+s)
+        costes<-2*a*sqrt(sum((d/Qepq)^2))
+        solA<-data.frame("N",t(matriz0),sum(costes))
+        solB<-data.frame("N",t(matrizf))
+        colnames(solA)<-c("Coalition",1:n,"Coalitional costs")
+        rownames(solA)<-""
+        colnames(solB)<-c("",1:n)
+        rownames(solB)<-""
+        sol<-list(solA,solB)
+        names(sol)<-c("Optimal order","Optimal shortages")
+        
       }
       
       cat("Cooperative case", sep="\n")
-      matriz0<-data.frame(coalicion[[2]],matriz0,costes)
-      rownames(matrizf)<-rep("",2^n)
-      colnames(matriz0)<-c("Coalition",1:n,"Coalitional costs")
-      colnames(matrizf)<-1:n
-      sol<-list(matriz0,matrizf)
-      names(sol)<-c("Optimal order","Optimal shortages")
+      
       return(sol)
     } else{
       cat("The values for r_i are not bigger that d_i.", sep="\n")

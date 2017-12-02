@@ -1,8 +1,11 @@
 EOQcoo <-
 function(n=NA,a=NA,d=NA,h=NA,m=NA){
-coalicion<-coalitions(n)
-matriz<-as.matrix(coalicion[[1]])
-matriz0<-matriz
+if (n<=10){
+  coalicion<-coalitions(n)
+  matriz<-as.matrix(coalicion[[1]])
+  matriz0<-matriz
+}
+if (n>10){matriz0<-c();costes<-c()}
 costes<-c();costes[1]<-0
 Qeoq<-matrix()
 if (sum(is.na(h)==T)==length(h)){
@@ -14,19 +17,30 @@ if (sum(is.na(h)==T)==length(h)){
       d<-Qeoq*m
     }
     Qeoq<-EOQ(n,a,d,h,m=NA)[[1]]
-    for (i in 2:nrow(matriz0)){
-      aux<-which(matriz0[i,]!=0)
-      for (j in 1:length(aux)){
-        matriz0[i,aux[j]]<-sqrt(2*a*d[aux[j]]^2/sum(d[aux]*h[aux]))
+    if (n<=10){
+      for (i in 2:nrow(matriz0)){
+        aux<-which(matriz0[i,]!=0)
+        for (j in 1:length(aux)){
+          matriz0[i,aux[j]]<-sqrt(2*a*d[aux[j]]^2/sum(d[aux]*h[aux]))
+        }
+        costes[i]<-a*d[aux[1]]/matriz0[i,aux[1]]+sum(h[aux]*matriz0[i,aux]/2)
       }
-      costes[i]<-a*d[aux[1]]/matriz0[i,aux[1]]+sum(h[aux]*matriz0[i,aux]/2)
-    }
     
-    sol<-data.frame(coalicion[[2]],matriz0,costes)
+      sol<-data.frame(coalicion[[2]],matriz0,costes)
+
+    }
+    if (n>10){
+      aux<-rep(1,n)
+      matriz0<-sqrt(2*a*d^2/sum(d*h))
+      costes<-a*d/matriz0+sum(h*matriz0/2)
+      sol<-data.frame("N",t(matriz0),sum(costes))
+      
+    }
     cat("Cooperative case", sep="\n")
     
     cat("Optimal order", sep="\n")
     colnames(sol)<-c("Coalition",1:n,"Coalitional costs")
+    
     return(sol)
   } else {
     cat("Values for d or m are necessary to determinate the optimal orders.", sep="\n")

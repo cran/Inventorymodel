@@ -10,16 +10,24 @@ function(n=NA,a=NA,d=NA,K=NA,cooperation=c(0,1)){
     }
     if (cooperation==1){
       cat("Cooperative case", sep="\n")
-      coalition<-coalitions(n)
-      matrix0<-as.matrix(coalition[[1]])
-      costs<-c();costs[1]=0
-      coa<-c();coa[1]=0
-      for (i in 2:nrow(matrix0)){
-        aux<-which(matrix0[i,]!=0)
-        costs[i]<-a*max(d[aux]/K[aux])
+      if (n<=10){
+        coalition<-coalitions(n)
+        matrix0<-as.matrix(coalition[[1]])
+        costs<-c();costs[1]=0
+        coa<-c();coa[1]=0
+        for (i in 2:nrow(matrix0)){
+          aux<-which(matrix0[i,]!=0)
+          costs[i]<-a*max(d[aux]/K[aux])
+        }
+        sol<-data.frame(matrix0,coalition[[2]],costs)
+        colnames(sol)<-c(1:n,"Coalition","Coalicional costs")
       }
-      sol<-data.frame(matrix0,coalition[[2]],costs)
-      colnames(sol)<-c(1:n,"Coalition","Coalicional costs")
+      if (n>10){
+        costs<-a*max(d/K)
+        
+        sol<-data.frame("N",costs)
+        colnames(sol)<-c("Coalition","Coalicional costs")
+      }
     }
   return(sol)
     }
