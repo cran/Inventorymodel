@@ -31,8 +31,7 @@ Option to indicate the allocation. If it is required \code{allocation=1} else \c
 }
 }
 \value{
-A vector with the individual cost to each agent in a \code{MCT}.
-}
+If \emph{n} is lesser than \emph{0}, a matrix with all possible coalitions in the first column. The next \emph{n} columns contain the associated cost to each agent in the coalition. Last column indicates the global cost of the optimal order. Otherwise, this matriz contains the individual costs and the associated values for \emph{N}.}
 \examples{
 mwhcct(n=3,a=10,av=c(0,10,10,10,20,20,20,30),d=c(1,0.95,0.9),K=c(1,1,1),
 cooperation=1,allocation = 1)

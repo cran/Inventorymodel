@@ -39,7 +39,7 @@ Option to indicate the allocation. If it is required \code{allocation=1} else \c
 A list with the following components:
 \itemize{
 
-\item{ \code{"Optimal policies"} A matrix with all possible coalitions in the first column. The second column contains the optimal order to each coalition. Last column indicates the global cost of this optimal order.}
+\item{ \code{"Optimal policies"} If \emph{n} is lesser than \emph{0}, a matrix with all possible coalitions in the first column. The second column contains the optimal order to each coalition. Last column indicates the global cost of this optimal order. Otherwise, this matriz contains the individual costs and the associated values for \emph{N}.}
 \item{ \code{"R-rule"} A matrix, for each coalition (row), contains the coalition  \emph{i(S)} and allocations proposed by R-rule.}
 }}
 

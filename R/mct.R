@@ -20,10 +20,16 @@ if (is.na(a)==T|sum(is.na(d)==T)==length(d)|sum(is.na(K)==T)==length(K)|sum(is.n
       sol<-matriz
     }
     if (n>10){
-      costes<-max(a+av)*max(d/K)
-      matriz<-data.frame("N",(max(a+av)*max(d/K)))
+      coa<-c()
+      for (i in 1:n){coa[i]<-paste(paste("'{",i,sep=""),"}'",sep="")}
+      coa<-c(coa,"'N'")
+      matriz<-rbind(diag(n),rep(1,n))
       
-      colnames(matriz)<-c("Coalition","Cost")
+      costes<-max(a+av)*max(d/K)
+      costes<-c((a+av)*d/K,costes)
+      matriz<-data.frame(matriz,coa,costes)
+      
+      colnames(matriz)<-c(1:n,"Coalition","Cost")
       sol<-matriz
     }
     

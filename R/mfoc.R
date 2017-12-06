@@ -23,10 +23,18 @@ function(n=NA,a=NA,d=NA,K=NA,cooperation=c(0,1)){
         colnames(sol)<-c(1:n,"Coalition","Coalicional costs")
       }
       if (n>10){
-        costs<-a*max(d/K)
+        coa<-c()
+        for (i in 1:n){coa[i]<-paste(paste("'{",i,sep=""),"}'",sep="")}
+        coa<-c(coa,"'N'")
+        matriz<-rbind(diag(n),rep(1,n))
         
-        sol<-data.frame("N",costs)
-        colnames(sol)<-c("Coalition","Coalicional costs")
+        costes<-a*max(d/K)
+        costes<-c(a*d/K,costes)
+        matriz<-data.frame(matriz,coa,costes)
+        
+        colnames(matriz)<-c(1:n,"Coalition","Cost")
+        sol<-matriz
+        
       }
     }
   return(sol)

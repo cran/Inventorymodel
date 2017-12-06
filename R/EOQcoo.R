@@ -30,10 +30,18 @@ if (sum(is.na(h)==T)==length(h)){
 
     }
     if (n>10){
-      aux<-rep(1,n)
+      coa<-c()
+      for (i in 1:n){coa[i]<-paste(paste("'{",i,sep=""),"}'",sep="")}
+      coa<-c(coa,"'N'")
+      Qeoq<-EOQ(n,a,d,h,m=NA)
+      
+      
       matriz0<-sqrt(2*a*d^2/sum(d*h))
       costes<-a*d/matriz0+sum(h*matriz0/2)
-      sol<-data.frame("N",t(matriz0),sum(costes))
+      
+      matriz0<-cbind(rbind(diag(Qeoq[[1]]),matriz0),c(Qeoq[[2]],sum(costes)))
+      rownames(matriz0)<-rep("",n+1)
+      sol<-data.frame(coa,matriz0)
       
     }
     cat("Cooperative case", sep="\n")

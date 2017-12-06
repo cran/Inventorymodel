@@ -74,6 +74,12 @@ mwhc2c<-
         
         
         if (n>10){
+          coal<-c()
+          for (i in 1:n){coal[i]<-paste(paste("'{",i,sep=""),"}'",sep="")}
+          coal<-c(coal,"'N'")	 
+          pedidoi<-sqrt(b*d/(2*a+2*(c1-c2)*K+b*K^2/d))
+          costesi<-sqrt(b*d*(2*a+2*(c1-c2)*K+b*K^2/d))-b*K+c2*d
+          faltantes<-d/pedidoi-K
           
           aux<-1:n
           coaux<-aux
@@ -97,15 +103,18 @@ mwhc2c<-
               sum(c2*(dcoa[SxT]-Kcoa[SxT]*xTaux))
             if (coste>coste2){pedido<-xTaux;coste<-coste2}
           }
-          matriz<-data.frame("N",pedido,coste)
+          
+          pedidoi<-c(pedidoi,pedido)
+          costes<-c(costesi,coste)
+          matriz<-data.frame(coal,pedidoi,costes)
           
           if (allocation==1){
-            matriz1<-c()
+            matriz1<-rbind(diag(costes[1:n]),rep(0,n))
             SxT<-which(pedido<dcoa/Kcoa)
-            suma1<-0
-            matriz1<-paste(paste("{",paste(SxT,sep=","),sep=""),"}",sep="")
-            matriz1[aux[SxT]+1]<-(bcoa[SxT]*dcoa[SxT])/2*pedido*(2*a+2*(c1-c2)*sum(Kcoa[SxT])+sum(bcoa[SxT]*Kcoa[SxT]^2/dcoa[SxT]))/sum(bcoa[SxT]*dcoa[SxT])+1/pedido*(bcoa[SxT]*dcoa[SxT])/2+c2*dcoa[SxT]-bcoa[SxT]*Kcoa[SxT]
-            matriz1[aux[-SxT]+1]<-c1*dcoa[-SxT]
+            matriz1[n+1,aux[SxT]]<-(bcoa[SxT]*dcoa[SxT])/2*pedido*(2*a+2*(c1-c2)*sum(Kcoa[SxT])+sum(bcoa[SxT]*Kcoa[SxT]^2/dcoa[SxT]))/sum(bcoa[SxT]*dcoa[SxT])+1/pedido*(bcoa[SxT]*dcoa[SxT])/2+c2*dcoa[SxT]-bcoa[SxT]*Kcoa[SxT]
+            matriz1[n+1,aux[-SxT]]<-c1*dcoa[-SxT]
+            rownames(matriz1)<-rep(" ",n+1)	
+            colnames(matriz1)<-1:n
           }
           
           colnames(matriz)<-c("Coalitions","Optimal orders","Costs")

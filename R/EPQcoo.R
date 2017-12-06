@@ -44,15 +44,24 @@ if (sum(is.na(h)==T)==length(h)){
         names(sol)<-c("Optimal order","Optimal shortages")
       }
       if (n>10){
-        matriz0<-sqrt(2*a*d^2/sum(d*h*s*(1-d/r)/(h+s)))
+        coa<-c()
+        for (i in 1:n){coa[i]<-paste(paste("'{",i,sep=""),"}'",sep="")}
+        coa<-c(coa,"'N'")
+        Qepq<-EPQ(n,a,d,h,m=NA,r,s)
+        
+        QepqN<-sqrt(2*a*d^2/sum(d*h*s*(1-d/r)/(h+s)))
+        matriz0<-QepqN
         matrizf<-matriz0*h*(1-d/r)/(h+s)
-        costes<-2*a*sqrt(sum((d/Qepq)^2))
-        solA<-data.frame("N",t(matriz0),sum(costes))
-        solB<-data.frame("N",t(matrizf))
+        matriz0<-rbind(diag(Qepq[[1]]),matriz0)
+        matrizf<-rbind(diag(Qepq[[2]]),matrizf)
+        costes<-2*a*sqrt(sum((d/QepqN)^2))
+        costes<-c(Qepq[[3]],sum(costes))
+        rownames(matriz0)<-rep("",n+1);rownames(matrizf)<-rep("",n+1)
+        
+        solA<-data.frame(coa,matriz0,costes)
+        solB<-data.frame(matrizf)
         colnames(solA)<-c("Coalition",1:n,"Coalitional costs")
-        rownames(solA)<-""
-        colnames(solB)<-c("",1:n)
-        rownames(solB)<-""
+        colnames(solB)<-c(1:n)
         sol<-list(solA,solB)
         names(sol)<-c("Optimal order","Optimal shortages")
         

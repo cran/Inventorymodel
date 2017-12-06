@@ -36,7 +36,7 @@ Vector. Cost of a shortage to each agent.
 \value{
 A list with the following components:
 \itemize{
-\item {\code{Optimal order} A matrix with all possible coalitions in the first column. The next \emph{n} columns contain the associated cost to each agent in the coalition. Last column indicates the global cost of the optimal order.}
+\item {\code{Optimal order} If \emph{n} is lesser than \emph{0}, a matrix with all possible coalitions in the first column. The next \emph{n} columns contain the associated cost to each agent in the coalition. Last column indicates the global cost of the optimal order.  Otherwise, this matriz contains the individual costs and the associated values for \emph{N}.}
 \item {\code{Optimal shortages} A matrix, for each coalition (row), contains in the column \emph{i} the allowed optimal shortages.}
 }
 }

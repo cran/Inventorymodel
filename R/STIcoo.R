@@ -30,11 +30,16 @@ function(n=NA,a=NA,av=NA,d=NA,h=NA,m=NA){
         sol<-list(matriz0)
       }
       if (n>10){
+        coa<-c()
+        for (i in 1:n){coa[i]<-paste(paste("'{",i,sep=""),"}'",sep="")}
+        coa<-c(coa,"'N'")
+        Qsti<-STI(n,a,av,d=NA,h,m)
+
         aS<-max(av)
-        matriz0<-Qsti*m*sqrt(2*(a+aS)/sum(m*Qsti*h))
-        costes<-sqrt(2*(a+aS)*sum(m*Qsti*h))
-        sol<-data.frame("N",t(matriz0),sum(costes))
-        colnames(sol)<-c("Coalition",1:n,"Coalitional costs")
+        matriz0<-rbind(diag(Qsti[[1]]),Qsti*m*sqrt(2*(a+aS)/sum(m*Qsti*h)))
+        costes<-c(Qsti[[2]],sum(sqrt(2*(a+aS)*sum(m*Qsti*h))))
+        sol<-data.frame(matriz0,coa,costes)
+        colnames(sol)<-c(1:n,"Coalition","Coalitional costs")
         sol<-list(sol)
       }
        
@@ -53,12 +58,18 @@ function(n=NA,a=NA,av=NA,d=NA,h=NA,m=NA){
       sol<-list(matriz0)
     }
     if (n>10){
+      
+      coa<-c()
+      for (i in 1:n){coa[i]<-paste(paste("'{",i,sep=""),"}'",sep="")}
+      coa<-c(coa,"'N'")
+      Qsti<-STI(n,a,av,d,h,m=NA)
+      
       aS<-max(av)
-      matriz0<-sqrt(2*(a+aS)*d^2/sum(d*h))
-      costes<-sqrt(2*(a+aS)*sum(d*h)) 
-      sol<-data.frame("N",t(matriz0),sum(costes))
-      colnames(sol)<-c("Coalition",1:n,"Coalitional costs")
-      sol<-list(sol)
+      matriz0<-rbind(Qsti[[1]],sqrt(2*(a+aS)*d^2/sum(d*h)))
+      costes<-c(Qsti[[2]],sum(sqrt(2*(a+aS)*sum(d*h))))
+      matriz0<-data.frame(matriz0,coa,costes)
+      colnames(matriz0)<-c(1:n,"Coalition","Order cost")
+      sol<-list(matriz0)
     }
     
   }

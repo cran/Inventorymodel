@@ -27,7 +27,7 @@ Option to indicate cooperation. If it exists \code{cooperation=1} else \code{coo
 
 }
 \value{
-A vector with the individual cost to each agent in a \code{MFOC}.
+If \code{cooperation=0}, a vector with the individual cost to each agent in a \code{MFOC}. If \code{cooperation=1} and \emph{n} is lesser than \emph{0}, a matrix which contains the associated costs for each possible group. Otherwise, this matrix only contains the individual costs and the associated values for \emph{N}.
 }
 \examples{
 mfoc(n=3,a=200,d=c(1.2,1.4,1.2),K=c(6,10,8),cooperation=0)

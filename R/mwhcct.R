@@ -6,6 +6,11 @@ mwhcct<-function(n=NA, a=NA, av=NA, d=NA, K=NA,cooperation=c(0,1),allocation=c(0
     cat("MWHC with Transportation Costs model", sep="\n")    
     coa<-coalitions(n)
     
+    if (cooperation==0){
+      costes<-(a+av[2:(n+1)])*d/K
+      sol<-costes
+      cat("Individual cost", sep="\n")
+    }
     if (cooperation==1){
       cat("Cooperative case", sep="\n")
       if (n<=10){
@@ -25,7 +30,12 @@ mwhcct<-function(n=NA, a=NA, av=NA, d=NA, K=NA,cooperation=c(0,1),allocation=c(0
         sol<-matriz
       }
       if (n>10){
-        matriz<-data.frame("N",(a+av[length(av)])*max(d/K))
+        coal<-c()
+        for (i in 1:n){coal[i]<-paste(paste("'{",i,sep=""),"}'",sep="")}
+        coal<-c(coal,"'N'")	
+        costes<-(a+av[2:(n+1)])*d/K
+        
+        matriz<-data.frame(coal,c(costes,(a+av[length(av)])*max(d/K)))
         colnames(matriz)<-c("Coalition","Cost")
         sol<-matriz
       }
@@ -47,7 +57,7 @@ mwhcct<-function(n=NA, a=NA, av=NA, d=NA, K=NA,cooperation=c(0,1),allocation=c(0
           }
           p2 <- p[aux, ]
           TL <- marginal_contribution_mean(p2, cost2)
-          R<-Shapley_value(cost1,game="cost")+TL
+          R<-shapley_mfoc(n,a,d,K)+TL
           sol<-list(sol,R)
           names(sol)<-c("Optimal solution","Allocation R rule")
         }

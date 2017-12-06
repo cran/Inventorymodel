@@ -28,7 +28,7 @@ Vector. Warehouse's capacity to each agent.
 Option to indicate cooperation. If it exists \code{cooperation=1} else \code{cooperation=0}.}
 }
 \value{
-A vector with the individual cost to each agent in a \code{MCT}.
+If \code{cooperation=0}, a vector with the individual cost to each agent in a \code{MCT}. If \code{cooperation=1} and \emph{n} is lesser than \emph{0}, a matrix which contains the associated costs for each possible group. Otherwise, this matrix only contains the individual costs and the associated values for \emph{N}.
 }
 \examples{
 mct(n=3,a=400,av=c(300,500,200),d=c(2,2,5),K=c(9,8,7),cooperation=0)

@@ -56,25 +56,33 @@ function(n=NA,a=NA,b=NA,d=NA,K=NA,cooperation=c(0,1),allocation=c(0,1)){
 				    matriz1[i,1+ind[k]]<-c0*b[ind[k]]*d[ind[k]]-b[ind[k]]*K[ind[k]]
 			    }
 			    matriz1[i,1]<-suma1
+			    rownames(matriz1)<-rep(" ",2^n)
+			    colnames(matriz1)<-c("Coalition",1:n)
 		  	}
-		  	rownames(matriz1)<-rep(" ",2^n)
-		}
+	  	}
+  		colnames(matriz)<-c("Coalitions","Optimal orders","Costs")
+  		sol<-matriz
 	 }
 	 if (n>10){
-	     matriz1<-c()
-		   aux<-1:n
-		   coa<-aux
-       coaux<-aux
-       dcoa<-d[aux];Kcoa<-K[aux];bcoa<-b[aux]
-       s=length(aux)
-       T<-rep(0,n)
-       coste<-Inf;pedido<-0
+	    coal<-c()
+	    for (i in 1:n){coal[i]<-paste(paste("'{",i,sep=""),"}'",sep="")}
+	    coal<-c(coal,"'N'")	   
+	    pedido<-sqrt(b*d/(2*a+b*K^2/d))
+	    costes<-sqrt(b*d*(2*a+b*K^2/d))-b*K
+	 
+	    coa<-rep(1,n)
+	    aux<-which(coa==1)
+	    coaux<-aux
+	    s=length(coaux)
+	    k=s+1
+	    T<-rep(0,length(coa))
+	    xT=0
+	    SxT=coa
 			
 		   s=n;k=s+1
 		   T<-rep(0,length(coa))
 	     xT=0
 		   SxT=coa
-		   matriz<-c("N")
 	     while(sum(SxT==T)!=length(coa)){
 			    k=k-1;T[coaux[k]]=1;T
 			    aux1<-which(T==1)
@@ -82,23 +90,26 @@ function(n=NA,a=NA,b=NA,d=NA,K=NA,cooperation=c(0,1),allocation=c(0,1)){
 			    aux2<-which(xT<d/K)
 			    SxT<-rep(0,length(coa));SxT[intersect(which(coa==1),aux2)]=1;SxT
 		   }
-		   matriz<-c(matriz,xT)
+		   pedido<-c(pedido,xT)
 		   ind<-which(SxT==1)
-		   matriz<-c(matriz,sum(b[ind]*d[ind])/xT-sum(b[ind]*K[ind]))
+		   costes<-c(costes,sum(b[ind]*d[ind])/xT-sum(b[ind]*K[ind]))
 		   suma1<-0
 		   c0<-sqrt((2*a+sum(b[ind]*K[ind]^2/d[ind]))/sum(b[ind]*d[ind]))
 		   if (allocation==1){
-			   for (k in 1:length(ind)){
-			    	matriz1[i,1+ind[k]]<-c0*b[ind[k]]*d[ind[k]]-b[ind[k]]*K[ind[k]]
+		     matriz1<-rbind(diag(costes[1:n]),rep(0,n))
+		     for (k in 1:length(ind)){
+			    	matriz1[n+1,ind[k]]<-c0*b[ind[k]]*d[ind[k]]-b[ind[k]]*K[ind[k]]
 			   }
+		     rownames(matriz1)<-rep(" ",n+1)	
+		     colnames(matriz1)<-1:n
 		   }
-		   rownames(matriz1)<-rep(" ")	
+		   coa<-coal
+		   matriz<-data.frame(coal,pedido,costes)
+		   colnames(matriz)<-c("Coalitions","Optimal orders","Costs")
+		   sol<-matriz
+
    }	 
 	 
-  matriz<-data.frame(matriz)
-  colnames(matriz)<-c("Coalitions","Optimal orders","Costs")
-  sol<-matriz
-  colnames(matriz1)<-c("Coalition_SxT",1:n)
   
  
   if (allocation==1) {
